@@ -1,10 +1,10 @@
-set(GAME_SOURCES main.cpp )
+set(GAME_SOURCES main.cpp)
 
-qt5_add_resources(RESOURCES qmlFile.qrc)
+qt5_add_resources(RESOURCES qml.qrc)
 
-add_executable(binary ${GAME_SOURCES} ${RESOURCES})
+add_executable(GAME ${GAME_SOURCES} ${RESOURCES})
 
-target_link_libraries(binary PUBLIC
+target_link_libraries(GAME PUBLIC
     Qt5::Core
     Qt5::Quick
 )

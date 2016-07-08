@@ -15,6 +15,7 @@ Matrix::~Matrix()
 
 void Matrix::basicInitialisation()
 {
+    this->score=0;
     for(int i=0;i<this->rows;i++)
         A[i] = new int[this->columns];
     
@@ -58,7 +59,7 @@ void Matrix::randomSlot()
         srand(time(0));
         int randomIndex=rand()%emptyList.size();
         A[emptyList[randomIndex].a][emptyList[randomIndex].b]=randomTwoFour();
-        //should emit signal here        
+        emit dataChanges(emptyList[randomIndex].a,emptyList[randomIndex].b,A[emptyList[randomIndex].a][emptyList[randomIndex].b]);
     } 
     else{
         //check whether move is possible or not 
@@ -82,8 +83,8 @@ void Matrix::moveUp()
             else if(A[topIndex][j]==A[topIndex+1][j])   //same values found
             {
                 A[topIndex][j]+=A[topIndex+1][j];
-                //should emit signal here for data change at A[topIndex][j]
-                //update score
+                emit dataChanges(topIndex,j,A[topIndex][j]);
+                this->score+=A[topIndex][j];
                 this->mergeUp(j,topIndex+1,bottomIndex);
                 topIndex+=1;
             }
@@ -101,10 +102,10 @@ void Matrix::mergeUp(int col,int start,int &end)
     for(int k=start;k<end;k++)
     {
         A[k][col]=A[k+1][col];
-        //should emit signal here for data change at A[k][col]
+        emit dataChanges(k,col,A[k][col]);
     }
     A[end][col]=0;
-    //should emit signal here for data change at A[end][col]
+    emit dataChanges(end,col,A[end][col]);
     end-=1;
 }
 
@@ -123,8 +124,8 @@ void Matrix::moveDown()
             else if(A[bottomIndex][j]==A[bottomIndex-1][j])
             {
                 A[bottomIndex][j]+=A[bottomIndex-1][j];
-                //should emit signal here for data change at A[bottomIndex][j]
-                //update score
+                emit dataChanges(bottomIndex,j,A[bottomIndex][j]);
+                this->score+=A[bottomIndex][j];
                 this->mergeDown(j,bottomIndex-1,topIndex);
                 bottomIndex-=1;
             }
@@ -143,10 +144,10 @@ void Matrix::mergeDown(int col,int start,int &end)
     for(int k=start;k>end;k--)
     {
         A[k][col]=A[k-1][col];
-        //should emit signal here for data change at A[k][col]
+        emit dataChanges(k,col,A[k][col]);
     }
     A[end][col]=0;
-    //should emit signal here for data change at A[end][col]
+    emit dataChanges(end,col,A[end][col]);
     end+=1;
 }
 
@@ -166,8 +167,8 @@ void Matrix::moveRight()
             else if(A[i][rightIndex]==A[i][rightIndex-1])
             {
                 A[i][rightIndex]+=A[i][rightIndex-1];
-                //should emit signal here for data change at A[i][rightIndex]
-                //update score
+                emit dataChanges(i,rightIndex,A[i][rightIndex]);
+                this->score+=A[i][rightIndex];
                 this->mergeRight(i,leftIndex,rightIndex-1);
                 rightIndex-=1;
             }
@@ -185,10 +186,10 @@ void Matrix::mergeRight(int row,int &start,int end)
     for(int k=end;k>start;k--)
     {
         A[row][k]=A[row][k-1];
-        //should emit signal here for data change at A[row][k]
+        emit dataChanges(row,k,A[row][k]);
     }
     A[row][start]=0;
-    //should emit signal here for data change at A[row][start]
+    emit dataChanges(row,start,A[row][start]);
     start+=1;
 }
 
@@ -209,8 +210,8 @@ void Matrix::moveLeft()
             else if(A[i][leftIndex]==A[i][leftIndex+1])
             {
                 A[i][leftIndex]+=A[i][leftIndex+1];
-                //should emit signal here for data change at A[i][leftIndex]
-                //update score
+                emit dataChanges(i,leftIndex,A[i][leftIndex]);
+                this->score+=A[i][leftIndex];
                 mergeLeft(i,leftIndex+1,rightIndex);
                 leftIndex+=1;
             }
@@ -230,9 +231,14 @@ void Matrix::mergeLeft(int row,int start,int &end)
     for(int k=start;k<end;k++)
     {
         A[row][k]=A[row][k+1];
-        //should emit signal here for data change at A[row][k]
+        emit dataChanges(row,k,A[row][k]);
     }
     A[row][end]=0;
-    //should emit signal here for data change at A[row][end]
+    emit dataChanges(row,end,A[row][end]);
     end-=1;
+}
+
+int Matrix::getScore()
+{
+    return this->score;
 }

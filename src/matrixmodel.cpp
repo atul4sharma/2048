@@ -71,7 +71,7 @@ bool MatrixModel::setData(const QModelIndex& index, const QVariant& value, int r
     
     if(role==Qt::EditRole)
     {
-        emit dataChange(index,index);
+        emit dataChanged(index,index);
         return true;
     }
 }

@@ -28,14 +28,15 @@ public :
     void mergeRight(int row,int &start,int end);
     void mergeLeft(int row,int start ,int &end);
     /*---------------------------------------*/
-    
-    
+    int getScore();    
 
 signals:
+    void dataChanges(int row,int col,int val);
     
 private:
     int **A;
-    int rows,columns;    
+    int rows,columns;
+    int score;    
 };
 
 #endif

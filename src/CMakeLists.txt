@@ -1,4 +1,4 @@
-set(GAME_SOURCES main.cpp)
+set(GAME_SOURCES main.cpp matrix.cpp)
 
 qt5_add_resources(RESOURCES qml.qrc)
 

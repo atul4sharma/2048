@@ -4,7 +4,7 @@ MatrixModel::MatrixModel(int rows,int columns,QObject *parent):
     QAbstractTableModel(parent),totalColumns(columns),totalRows(rows)
 {
     gameMatrix = new Matrix(totalRows,totalColumns);
-
+    connect(gameMatrix,SIGNAL(dataChanges(int,int,int)),this,SLOT(setModelData(int,int,int)));
     for(int i=0;i<totalRows;i++)
     {
         for(int j=0;j<totalColumns;j++)
@@ -111,4 +111,42 @@ void MatrixModel::showData()
 int MatrixModel::currentScore() const
 {
     return gameMatrix->getScore();
+}
+
+void MatrixModel::moveUp()
+{
+    gameMatrix->moveUp();
+    emit scoreChanged();
+    gameMatrix->randomSlot();
+    this->showData();
+}
+
+void MatrixModel::moveDown()
+{
+    gameMatrix->moveDown();
+    emit scoreChanged();
+    gameMatrix->randomSlot();
+    this->showData();
+}
+
+void MatrixModel::moveLeft()
+{
+    gameMatrix->moveLeft();
+    emit scoreChanged();
+    gameMatrix->randomSlot();
+    this->showData();
+}
+
+void MatrixModel::moveRight()
+{
+    gameMatrix->moveRight();
+    emit scoreChanged();
+    gameMatrix->randomSlot();
+    this->showData();
+}
+
+void MatrixModel::setModelData(int row, int col, int val)
+{
+    QModelIndex currIndex=this->index(row,col);
+    this->setData(currIndex,QVariant::fromValue(val),Qt::EditRole);
 }

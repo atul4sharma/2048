@@ -26,6 +26,15 @@ public:
     int currentScore() const;
 signals:
     void scoreChanged();
+
+public slots:
+    Q_INVOKABLE void moveUp();
+    Q_INVOKABLE void moveDown();
+    Q_INVOKABLE void moveRight();
+    Q_INVOKABLE void moveLeft();
+
+    void setModelData(int row,int col,int val);
+    
 private:
     int totalRows,totalColumns;
     Matrix *gameMatrix;

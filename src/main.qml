@@ -1,46 +1,91 @@
 import QtQuick 2.5
-import QtQuick.Window 2.2
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.1
 
-Window{
-    id: mainWindow
-    height: Screen.height/2
-    width: Screen.width/3
-    x: Screen.width/3
-    y:Screen.height/4
+ApplicationWindow{
+    id:window
     visible: true
-    
-    Rectangle{
-        id: root
-        color: "grey"
-        height: mainWindow.height
-        width: mainWindow.width
-        anchors.fill: mainWindow
-        focus: true
-        
-        Text{
-            id: scoreText
-            text: "Score : "
-            font.pixelSize: root.height/15
+    title: "2048"
+    height: 350
+    width:  350
+
+    toolBar: ToolBar{
+        Text {
+            id: text
+            color: "white"
+            text: qsTr("Score : "+game.score)
+            font{
+                pixelSize:window.height/10
+            }
+        }
+    }
+
+    TableView{
+        id:tableView
+        visible:true
+        anchors.fill: parent
+        headerVisible: false
+        focus : true
+
+        Keys.onUpPressed: game.moveUp()
+        Keys.onDownPressed: game.moveDown()
+        Keys.onLeftPressed: game.moveLeft()
+        Keys.onRightPressed: game.moveRight()
+
+
+        Layout.minimumWidth: 300
+        Layout.minimumHeight: 300
+        Layout.preferredHeight: window.height - window.height/10
+        Layout.preferredWidth: window.width
+
+        TableViewColumn{
+            role:"firstColumn"
+            resizable: false
+            movable: false
+            width:tableView.width/4 - 2
+            delegate:Square{
+                currentValue: styleData.value
+                anchors.fill: parent
+            }
         }
         
-        Grid {
-                rows: 4
-                columns: 4
-                spacing: 4
-                anchors.verticalCenter: root.verticalCenter
-                anchors.horizontalCenter: root.horizontalCenter
-
-                Repeater {
-                    id: boardRepeater
-                    model: 16
-                    delegate: Square {
-                        squareWidth: root.width/5
-                        squareHeight: root.height/5
-                        currentValue: 8
-                    }
-                }
+        TableViewColumn{
+            role:"secondColumn"
+            resizable: false
+            movable: false
+            width:tableView.width/4 - 2
+            delegate:Square{
+                currentValue: styleData.value
+                anchors.fill: parent
             }
-    
+        }
+        
+        TableViewColumn{
+            role:"thirdColumn"
+            resizable: false
+            movable: false
+            width:tableView.width/4 -2
+            delegate:Square{
+                currentValue: styleData.value
+                anchors.fill: parent
+            }
+        }
+        
+        TableViewColumn{
+            role:"fourthColumn"
+            resizable: false
+            movable: false
+            width:tableView.width/4 - 2
+            delegate: Square{
+                currentValue: styleData.value
+                anchors.fill: parent
+            }
+        }
+
+        rowDelegate:Rectangle{
+            height: tableView.height/4 - 2
+            color:"#232629"
+        }
+        model:game
     }
-    
 }

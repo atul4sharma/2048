@@ -10,6 +10,8 @@
 class MatrixModel : public QAbstractTableModel
 {
     Q_OBJECT
+    
+    Q_PROPERTY(int score READ currentScore NOTIFY scoreChanged)
 public:
     explicit MatrixModel(int rows =4 , int columns=4 , QObject *parent =0);
     int rowCount(const QModelIndex &parent )const;
@@ -19,9 +21,15 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     
+    QHash<int, QByteArray> roleNames() const ;
+    void showData(); //just for debugging , console o/p
+    int currentScore() const;
+signals:
+    void scoreChanged();
 private:
     int totalRows,totalColumns;
     Matrix *gameMatrix;
+    enum MatrixRoles{ firstCol = Qt::UserRole, secondCol , thirdCol , fourthCol };
     
 };
 

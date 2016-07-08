@@ -46,6 +46,18 @@ QVariant MatrixModel::data(const QModelIndex& index, int role) const
     
     if(role==Qt::DisplayRole || role==Qt::EditRole)
         return QVariant(gameMatrix->getA(index.row(),index.column()));
+    
+    if(role==firstCol)
+        return QVariant(gameMatrix->getA(index.row(),0));
+    
+    if(role==secondCol)
+        return QVariant(gameMatrix->getA(index.row(),1));
+    
+    if(role==thirdCol)
+        return QVariant(gameMatrix->getA(index.row(),2));
+
+    if(role==fourthCol)
+        return QVariant(gameMatrix->getA(index.row(),3));
 }
 
 Qt::ItemFlags MatrixModel::flags(const QModelIndex& index) const
@@ -74,4 +86,29 @@ bool MatrixModel::setData(const QModelIndex& index, const QVariant& value, int r
         emit dataChanged(index,index);
         return true;
     }
+}
+
+QHash<int, QByteArray> MatrixModel::roleNames() const
+{
+    QHash<int,QByteArray> roles ;
+    roles[firstCol]="firstColumn";
+    roles[secondCol]="secondColumn";
+    roles[thirdCol]="thirdColumn";
+    roles[fourthCol]="fourthColumn";
+    
+    return roles;
+}
+
+void MatrixModel::showData()
+{
+    for(int i=0;i<totalRows;i++)
+    {  QDebug debug=qDebug();
+        for(int j=0;j<totalColumns;j++)
+            debug<< this->data(this->index(i,j),Qt::EditRole).toInt();
+    }
+}
+
+int MatrixModel::currentScore() const
+{
+    return gameMatrix->getScore();
 }

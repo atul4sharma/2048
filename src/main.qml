@@ -12,7 +12,7 @@ ApplicationWindow{
     toolBar: ToolBar{
         Text {
             id: text
-            color: "white"
+            color: "black"
             text: qsTr("Score : "+game.score)
             font{
                 pixelSize:window.height/10
@@ -42,7 +42,7 @@ ApplicationWindow{
             role:"firstColumn"
             resizable: false
             movable: false
-            width:tableView.width/4 - 2
+            width:tableView.width/4 - 1
             delegate:Square{
                 currentValue: styleData.value
                 anchors.fill: parent
@@ -53,7 +53,7 @@ ApplicationWindow{
             role:"secondColumn"
             resizable: false
             movable: false
-            width:tableView.width/4 - 2
+            width:tableView.width/4 - 1
             delegate:Square{
                 currentValue: styleData.value
                 anchors.fill: parent
@@ -64,7 +64,7 @@ ApplicationWindow{
             role:"thirdColumn"
             resizable: false
             movable: false
-            width:tableView.width/4 -2
+            width:tableView.width/4 -1
             delegate:Square{
                 currentValue: styleData.value
                 anchors.fill: parent
@@ -75,7 +75,7 @@ ApplicationWindow{
             role:"fourthColumn"
             resizable: false
             movable: false
-            width:tableView.width/4 - 2
+            width:tableView.width/4 - 1
             delegate: Square{
                 currentValue: styleData.value
                 anchors.fill: parent
@@ -83,7 +83,7 @@ ApplicationWindow{
         }
 
         rowDelegate:Rectangle{
-            height: tableView.height/4 - 2
+            height: tableView.height/4 - 1
             color:"#232629"
         }
         model:game

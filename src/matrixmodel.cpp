@@ -101,6 +101,7 @@ QHash<int, QByteArray> MatrixModel::roleNames() const
 
 void MatrixModel::showData()
 {
+    qDebug()<<"score : "<<gameMatrix->getScore();
     for(int i=0;i<totalRows;i++)
     {  QDebug debug=qDebug();
         for(int j=0;j<totalColumns;j++)

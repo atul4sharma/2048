@@ -23,6 +23,8 @@ void Matrix::basicInitialisation()
         for(int j=0;j<this->columns;j++)
             A[i][j]=0;
         
+    randomSlot();
+    randomSlot();        
 }
 
 int Matrix::getA(int i, int j)

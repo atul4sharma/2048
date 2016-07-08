@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
 #include <QQuickView>
@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-    QCoreApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     MatrixModel *model=new MatrixModel(4,4);
     QQmlApplicationEngine *engine=new QQmlApplicationEngine;
     engine->rootContext()->setContextProperty("game",QVariant::fromValue(model));

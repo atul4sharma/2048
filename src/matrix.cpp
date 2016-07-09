@@ -64,8 +64,31 @@ void Matrix::randomSlot()
         emit dataChanges(emptyList[randomIndex].a,emptyList[randomIndex].b,A[emptyList[randomIndex].a][emptyList[randomIndex].b]);
     } 
     else{
-        //check whether move is possible or not 
-        // if not then 'game over'
+        qDebug()<<"no more space";
+        // check whether game is over or not
+        int flag =0;
+        for(int i=1;i<this->rows - 1;i++)
+            for(int j=1;j<this->columns -1;j++)
+                if(A[i][j]==A[i+1][j] || A[i][j]==A[i][j+1] || A[i][j]==A[i-1][j] || A[i][j]==A[i][j-1])
+                {
+                    flag =1;
+                    break;
+                }
+        //check corner points
+        if(A[0][0]==A[1][0] || A[0][0]==A[0][1])
+            flag=1;
+        if(A[rows-1][0]==A[rows-1][1] || A[rows-1][0]==A[rows-2][0])
+            flag=1;
+        if(A[0][columns-1]==A[0][columns-2] || A[0][columns-1]==A[1][columns-1])
+            flag=1;
+        if(A[rows-1][columns-1]==A[rows-2][columns-1] || A[rows-1][columns-1]==A[rows-1][columns-2])
+            flag=1;
+
+        if(flag==0)
+        {
+            qDebug()<<"game over ";
+            basicInitialisation(); //a little flaw here
+        }
     }
 }
 

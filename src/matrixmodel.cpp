@@ -1,7 +1,7 @@
 #include "matrixmodel.h"
 
 MatrixModel::MatrixModel(int rows,int columns,QObject *parent):
-    QAbstractTableModel(parent),totalColumns(columns),totalRows(rows)
+    QAbstractTableModel(parent),totalRows(rows),totalColumns(columns)
 {
     gameMatrix = new Matrix(totalRows,totalColumns);
     connect(gameMatrix,SIGNAL(dataChanges(int,int,int)),this,SLOT(setModelData(int,int,int)));

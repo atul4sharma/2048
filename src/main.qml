@@ -6,9 +6,11 @@ ApplicationWindow{
     id:window
     visible: true
     title: "2048"
-    height: 350
-    width:  350
-
+    height: 355
+    width:  355
+    minimumHeight: 355
+    minimumWidth: 355
+    
     toolBar: ToolBar{
         Text {
             id: text
@@ -25,16 +27,13 @@ ApplicationWindow{
         visible:true
         anchors.fill: parent
         headerVisible: false
-        focus : true
+        focus : !(game.gameOver)
 
         Keys.onUpPressed: game.moveUp()
         Keys.onDownPressed: game.moveDown()
         Keys.onLeftPressed: game.moveLeft()
         Keys.onRightPressed: game.moveRight()
 
-
-        Layout.minimumWidth: 300
-        Layout.minimumHeight: 300
         Layout.preferredHeight: window.height - window.height/10
         Layout.preferredWidth: window.width
 
@@ -87,5 +86,24 @@ ApplicationWindow{
             color:"#232629"
         }
         model:game
+    }
+    
+    Rectangle{
+        visible:game.gameOver
+        width: window.width
+        height: window.height
+        color: "white"
+        opacity: 0.7
+        Text{
+            y:parent.height/4
+            x:y/4
+            text:qsTr("Game Over ")
+            font.pixelSize:parent.height/6
+        }
+        focus:game.gameOver
+        MouseArea{
+            anchors.fill:parent
+            onClicked:{game.basicDeletion() }
+        }
     }
 }

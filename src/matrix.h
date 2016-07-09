@@ -29,10 +29,10 @@ public :
     void mergeLeft(int row,int start ,int &end);
     /*---------------------------------------*/
     int getScore();    
-
+    void setScore(int val);
 signals:
     void dataChanges(int row,int col,int val);
-    
+    void endGame();
 private:
     int **A;
     int rows,columns;

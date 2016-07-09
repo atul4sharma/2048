@@ -3,8 +3,18 @@
 MatrixModel::MatrixModel(int rows,int columns,QObject *parent):
     QAbstractTableModel(parent),totalRows(rows),totalColumns(columns)
 {
+    this->basicInitialisaton();
+
+}
+
+
+void MatrixModel::basicInitialisaton()
+{
+    state=notOver;
+    emit stateIsChanged();
     gameMatrix = new Matrix(totalRows,totalColumns);
     connect(gameMatrix,SIGNAL(dataChanges(int,int,int)),this,SLOT(setModelData(int,int,int)));
+    connect(gameMatrix,SIGNAL(endGame()),this,SLOT(endTheGame()));
     for(int i=0;i<totalRows;i++)
     {
         for(int j=0;j<totalColumns;j++)
@@ -14,7 +24,14 @@ MatrixModel::MatrixModel(int rows,int columns,QObject *parent):
             //value from A[i][j] is copied to the currentIndex
         }
     }
+}
 
+void MatrixModel::basicDeletion()
+{
+    gameMatrix->setScore(0);
+    emit scoreChanged();
+    delete gameMatrix;    
+    this->basicInitialisaton();
 }
 
 int MatrixModel::rowCount(const QModelIndex &parent = QModelIndex()) const
@@ -150,4 +167,18 @@ void MatrixModel::setModelData(int row, int col, int val)
 {
     QModelIndex currIndex=this->index(row,col);
     this->setData(currIndex,QVariant::fromValue(val),Qt::EditRole);
+}
+
+bool MatrixModel::gameOver()
+{
+    if(state==over)
+        return true;
+    else
+        return false;
+}
+
+void MatrixModel::endTheGame()
+{
+    state=over;
+    emit stateIsChanged();    
 }

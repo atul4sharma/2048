@@ -87,7 +87,8 @@ void Matrix::randomSlot()
         if(flag==0)
         {
             qDebug()<<"game over ";
-            basicInitialisation(); //a little flaw here
+            emit endGame();
+            
         }
     }
 }
@@ -266,4 +267,9 @@ void Matrix::mergeLeft(int row,int start,int &end)
 int Matrix::getScore()
 {
     return this->score;
+}
+
+void Matrix::setScore(int val)
+{
+    this->score=val;
 }

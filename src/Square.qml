@@ -31,7 +31,7 @@ Rectangle{
     Text{
         anchors.centerIn:square
         text: qsTr(currentValue === 0?"":currentValue.toString());
-        color: currentValue < 16?"black":"white"
+        color: currentValue < 8?"black":"white"
         font.pixelSize: parent.height/2.5
     }
 

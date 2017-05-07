@@ -1,10 +1,11 @@
 #include "matrixmodel.h"
-
+// Abstraction,  as the definition is kept separately from the declaration
+// To provide the api we can just show the header file to the client actually hidding the implementation details of all the functions
 MatrixModel::MatrixModel(int rows,int columns,QObject *parent):
     QAbstractTableModel(parent),totalRows(rows),totalColumns(columns)
 {
+    // this pointer points to the current object(ie which invokes the method)
     this->basicInitialisaton();
-
 }
 
 
@@ -79,8 +80,8 @@ QVariant MatrixModel::data(const QModelIndex& index, int role) const
 
 Qt::ItemFlags MatrixModel::flags(const QModelIndex& index) const
 {
-    if(!index.isValid())
-        return Qt::ItemIsEnabled;
+//     if(!index.isValid())
+//         return Qt::ItemIsEnabled;
     
     return Qt::ItemIsEnabled;
 }

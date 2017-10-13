@@ -1,6 +1,6 @@
-Game 2048
+# Game 2048
 
-Using Qt and QML
+## Using Qt and QML
 
 To Build - 
 
